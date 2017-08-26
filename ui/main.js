@@ -1,13 +1,27 @@
 // counter code
 var button = document.getElementById('counter');
-var counter = 0;
+
 button.onclick = function(){
-    //make a req to counter endpoint
+    //create a req to object
+    var request = new XmlHttpRequest();
     
     //capture the reponse and store it in a variable 
+    request.onreadystatechange = function () {
+    if( request.readystate === XmlHttpRequest.Done)        
+    {
+        //take some action
+       if (request.status==200) {
+           varcounter = request.responseText;
+           var span = document.getElementById('count');
+        span.innerHtml = counter.toString();
+       }
+    }
+        //not done
+    };
+    //make the request
+    request.open('GET','http://u2015shradhaagrawal.imad.hasura-app.io/counter',true);
+    request.send(null);
     
-    //render the variable in correct spam
-    counter = counter+1;
-    var span = document.getElementById('count');
-    span.innerHtml = counter.toString();
+    
+    
 };
