@@ -5,12 +5,13 @@ var path = require('path');
 var app = express();
 app.use(morgan('combined'));
 
-var articleOne = {
-    title: 'Article one Shradha ',
-    heading: 'Article-one',
-    date : 'sept 5,2017',
-    content:` <p>
-            this is the content this is the contentthis is the content this is the contentthis is the content this is the content this is the content this is the content this is the content this is the content this is the content
+var articles = {
+'article-one' : {
+     title: 'Article one Shradha ',
+     heading: 'Article-one',
+     date : 'sept 5,2017',
+     content:` <p>
+             this is the content this is the contentthis is the content this is the contentthis is the content this is the content this is the content this is the content this is the content this is the content this is the content
         </p> <p>
             this is the content this is the contentthis is the content this is the contentthis is the content this is the content this is the content this is the content this is the content this is the content this is the content
         </p> <p>
@@ -22,7 +23,28 @@ var articleOne = {
         </p> <p>
             this is the content this is the contentthis is the content this is the contentthis is the content this is the content this is the content this is the content this is the content this is the content this is the content
         </p>`
+},
+'acticle-two' : {
+     title: 'Article Two Shradha ',
+    heading: 'Article-two',
+    date : 'sept 6,2017',
+    content:`   <p> THIS IS MY SECOND ARTICLE
+            this is the content this is the contentthis is the content this is the contentthis is the content this is the content this is the content this is the content this is the content this is the content this is the content
+        </p> <p>
+            this is the content this is the contentthis is the content this is the contentthis is the content this is the content this is the content this is the content this is the content this is the content this is the content
+        </p>`
+},
+'acticle-three' : {  title: 'Article Two Shradha ',
+    heading: 'Article-three',
+    date : 'sept 7,2017',
+    content:`   <p> THIS IS MY THIRD ARTICLE
+            this is the content this is the contentthis is the content this is the contentthis is the content this is the content this is the content this is the content this is the content this is the content this is the content
+        </p> <p>
+            this is the content this is the contentthis is the content this is the contentthis is the content this is the content this is the content this is the content this is the content this is the content this is the content
+        </p>`},
 };
+
+
 function createTemplate(data){
     var title=data.title;
     var date=data.date;
@@ -65,8 +87,11 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
 
-app.get('/article-one', function (req, res) {
- res.send(createTemplate(articleOne));
+app.get('/:articleName', function (req, res) {
+    //articeName = article-one
+    //articles[articleName] = {} content object for article-one
+    var articleName = req.parans.articleName;
+ res.send(createTemplate(articles[articleName]));
 });
 
 app.get('/article-two', function (req, res) {
